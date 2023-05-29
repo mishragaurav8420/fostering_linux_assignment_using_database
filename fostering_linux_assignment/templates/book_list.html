@@ -1,0 +1,71 @@
+<style>
+    /* Define CSS styles for the table */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+  
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    th {
+      background-color: #f2f2f2;
+    }
+  
+    /* Define CSS styles for the actions links */
+    .actions {
+      display: flex;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+  
+    .actions a {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  
+    .actions form {
+      display: inline;
+    }
+  
+    .actions button {
+      color: red;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+    }
+  </style>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Page Count</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+        <tr>
+          <td>{{ book.title }}</td>
+          <td>{{ book.description }}</td>
+          <td>{{ book.page_count }}</td>
+          <td class="actions">
+            <a href="{% url 'book_update' book.id %}">Update</a>
+            <form method="post" action="{% url 'book_delete' book.id %}">
+              {% csrf_token %}
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'book_create' %}">Add Book</a>
+  
